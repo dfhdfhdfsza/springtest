@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<jsp:include page="../layout/header.jsp"></jsp:include>
+	<table>
+		<thead>
+			<tr>
+				<th>bno</th>
+				<th>title</th>
+				<th>content</th>
+				<th>writer</th>
+				<th>registerDate</th>
+				<th>read_count</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>${bvo.bno }</td>
+				<td>${bvo.title }</td>
+				<td>${bvo.content }</td>
+				<td>${bvo.writer }</td>
+				<td>${bvo.registerDate }</td>
+				<td>${bvo.read_count }</td>
+			</tr>
+		</tbody>
+	</table>
+	<jsp:include page="../layout/footer.jsp"></jsp:include>
+</body>
+</html>

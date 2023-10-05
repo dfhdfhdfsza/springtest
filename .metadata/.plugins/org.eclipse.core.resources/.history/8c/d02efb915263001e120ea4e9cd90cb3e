@@ -1,0 +1,38 @@
+package com.ezen.myproject.controller;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ezen.myProject.domain.boardVO;
+import com.ezen.myproject.service.BoardService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/board/*")
+@Slf4j
+
+public class BoardController 
+{
+	@Inject
+	private BoardService bsv;
+	
+	@GetMapping("/register")
+	public String boardRegisterGet() 
+	{
+		//servlet-context.xml에서 자동으로 .jsp를 붙여주는 설정을 해줘서 별도로 안붙여줘도됨
+		return "/board/register";
+	}
+	
+	@PostMapping("/register")
+	public String register(boardVO bvo)
+	{
+		log.info(">>>"+bvo.toString());
+		return "/";
+	}
+
+}
