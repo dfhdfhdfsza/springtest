@@ -20,17 +20,20 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active"  href="/">Home</a>
         </li>
-       
+       <c:if test="${loginmvo eq null}">
+       		<li class="nav-item">
+          		<a class="nav-link" href="/member/login" >Log in</a>
+        	</li>
+       </c:if>
+        <c:if test="${loginmvo ne null}">
+        	<li class="nav-item">
+          		<a class="nav-link"  href="/member/logout">Log out</a>
+        	</li>
+        </c:if>
         <li class="nav-item">
-          <a class="nav-link" >Log in</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" >Log out</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" >Sign up</a>
+          <a class="nav-link" href="/member/signup">Sign up</a>
         </li>
         <li class="nav-item">
           <a class="nav-link"  href="/board/register">REG</a>
@@ -38,6 +41,9 @@
         <li class="nav-item">
           <a class="nav-link" href="/board/list">Board List</a>
         </li>
+        <c:if test="${loginmvo ne null}">
+        	<li> <a class="nav-link" href="/member/modify">${loginmvo.id} 님 로그인되셨습니다.</a></li>
+		</c:if>
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

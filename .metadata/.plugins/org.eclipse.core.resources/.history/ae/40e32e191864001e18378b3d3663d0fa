@@ -1,0 +1,12 @@
+package com.ezen.myproject.service;
+
+import javax.inject.Inject;
+
+import com.ezen.myproject.repository.MemberDAO;
+
+public class MemberServiceImpl implements MemberService
+{
+	@Inject
+	private MemberDAO mdao;
+
+}

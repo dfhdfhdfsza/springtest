@@ -14,7 +14,7 @@
 	<!-- mapping 상태는 get/post가 별도의 mapping을 가짐 -->
 	<form action="/board/register" method="post">
 		title: <input type="text" name="title"> <br>
-		writer: <input type="text" name="writer"> <br>
+		writer: <input type="text" name="writer" value="${loginmvo.id}" readonly="readonly"> <br>
 		content: <textarea rows="5" cols="50" name="content"></textarea> <br>
 		<button type="submit">등록</button> <br>
 	</form>
