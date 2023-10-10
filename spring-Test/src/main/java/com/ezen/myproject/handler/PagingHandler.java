@@ -1,0 +1,38 @@
+package com.ezen.myproject.handler;
+
+import com.ezen.myproject.domain.pagingVO;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+public class PagingHandler 
+{
+	private int startPage;
+	private int endPage;
+	private boolean prev;
+	private boolean next;
+	private int totalCount;
+	private int realEndPage;
+	private pagingVO pgvo;
+	
+	public PagingHandler(pagingVO pgvo,int totalCount)
+	{
+		this.pgvo=pgvo;
+		this.totalCount=totalCount;
+		
+		this.endPage=(int)Math.ceil(pgvo.getPageNo()/(double)pgvo.getQty())*pgvo.getQty();
+		this.startPage=this.endPage-9;
+		realEndPage=(int)Math.ceil(totalCount/(double)pgvo.getQty());
+		
+		if(realEndPage<this.endPage)
+			this.endPage=realEndPage;
+		
+		this.prev=this.startPage>1;
+		this.next=this.endPage<realEndPage;
+	}
+	
+}

@@ -1,0 +1,20 @@
+package com.ezen.myproject.domain;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+
+public class pagingVO 
+{
+	private int pageNo;	//현재 화면에 표현되는 페이지네이션 번호
+	private int qty;	//한 페이지당 보여지는 게시글 수
+	
+	
+	private String type;	//검색타입
+	private String keyword;	//검색어
+}
