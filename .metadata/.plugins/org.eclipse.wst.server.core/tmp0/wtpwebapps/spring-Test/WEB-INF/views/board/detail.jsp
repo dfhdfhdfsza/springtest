@@ -53,15 +53,8 @@
 		<!-- 댓글 표시 라인 -->
 		<div>
 			<ul id="cmtListArea">
-				<li>
-					<div>
-						<div>writer</div>
-						Content
-					</div>
-					<span>reg_date</span>
-				</li>
+				
 			</ul>
-		
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -69,6 +62,9 @@
 		console.log(bnoVal);
 	</script>
 	<script type="text/javascript" src="/resources/js/boardComment.js">
+	</script>
+	<script type="text/javascript">
+		getCommentList(bnoVal);
 	</script>
 	
 	<jsp:include page="../layout/footer.jsp"></jsp:include>

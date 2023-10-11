@@ -8,4 +8,15 @@
   		values(#{bno},#{writer},#{content})
   	</insert>
   	
+  	<select id="getList" resultType="com.ezen.myproject.domain.commentVO">
+  		select * from comment where bno=#{bno} order by cno desc
+  	</select>
+  	
+  	<update id="update">
+  		update comment set content=#{content} where cno=#{cno}
+  	</update>
+  	
+  	<delete id="remove">
+  		delete from comment where cno=#{cno}
+  	</delete>
   </mapper>
