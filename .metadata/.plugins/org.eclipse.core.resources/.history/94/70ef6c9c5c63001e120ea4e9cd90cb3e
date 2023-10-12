@@ -1,9 +1,0 @@
-package com.ezen.myproject.service;
-
-import com.ezen.myproject.domain.boardVO;
-
-public interface BoardService {
-
-	int register(boardVO bvo);
-
-}

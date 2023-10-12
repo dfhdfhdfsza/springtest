@@ -1,0 +1,34 @@
+fileupload 준비작업
+1.라이브러리 추가 pom.xml
+commons-fileupload 1.4
+commons-io 2.11.0
+thumbnailator 0.4.14
+//파일에 대한 확장자 처리
+//이미지 파일 여부 확인
+tika-core 1.28 / tika-parsers 1.28
+
+--2023-10-12
+2.DB  table 생성
+create table file(
+uuid varchar(256) not null,
+save_dir varchar(256) not null,
+file_name varchar(256)not null,
+file_type tinyint(1) default 0,
+bno int,
+file_size int,
+reg_date datetime default now(),
+primary key(uuid));
+
+3.첨부파일 폴더생성
+D:\_mywebspring\_java\fileupload
+
+4.servlet-context.xml 파일에 파일경로,설정
+
+<resources  mapping="/upload/**" location="file:///D:\_mywebspring\_java\fileupload"/>
+<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
+
+
+
+
+
+

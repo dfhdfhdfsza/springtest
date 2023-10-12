@@ -1,0 +1,57 @@
+// trigger를 눌렀을때 file을 눌렀을때랑 같은 동작을하게하는 이벤트리스너
+document.getElementById('trigger').addEventListener('click',()=>{   
+    document.getElementById('file').click();
+})
+
+//정규표현식을 사용하여 파일 형식제한 함수 만들기
+//실행파일 막기,이미지 파일만 체크,20mb 사이즈보다 크면 막기
+const regExp=new RegExp("\.(exe|sh|bat|msi|dll|jar)$"); //실행파일 막기
+const regExpImg=new RegExp("\.(jpg|jpeg|gif|png|bmp)$");//이미지파일 패턴
+const maxSize=1024*1024*20; //20mb 제한할 변수(1024*1024 = mb)
+
+//리턴값은 0과 1로 리턴
+function fileValidation(fileName,fileSize)
+{
+    if(regExp.test(fileName)){ //실행파일이면...
+        return 0;
+    }
+    else if(fileSize>maxSize){//파일사이즈가 20mb를 넘어가면...
+        return 0;
+    }else if(!regExpImg.test(fileName)){ //확장자가 img확장자가 아니면... 실행파일외의 모든 파일을 받을거면 필요 x
+        return 0;
+    }else{
+        return 1;
+    }
+}
+
+//첨부 파일에 따라 파일이 등록가능한지 체크 함수
+document.addEventListener('change',(e)=>{
+    console.log(e.target);
+    if(e.target.id=='file'){
+        document.getElementById('regBtn').disabled=false; //한번 true 변경되면 다시 돌아오지 않음
+        const fileObject=document.getElementById('file').files; //여러개의 파일이 배열로 들어옴
+        console.log(fileObject);
+        let div=document.getElementById('fileZone');
+        div.innerHTML='';
+        let ul=`<ul>`;
+        let isOk=1; // fileValidation 함수의 리턴 여부를 *로 체크
+        for(let file of fileObject)
+        {
+            let validResult = fileValidation(file.name,file.size);
+            isOk*=validResult; //모든 파일이 누적되어 *
+            ul+=`<li>`;
+            //업로드 가능 여부 표시
+            ul+=`<div> ${validResult? '업로드 가능':'업로드 불가능'} </div>`;
+            ul+=`${file.name}`;
+            ul+=`<span class = "badge text-bg-${validResult? 'success':'danger'}"> ${file.size}Byte </span></li>`
+        }
+         ul+=`</ul>`;
+         div.innerHTML=ul;
+         if(isOk==0){
+            document.getElementById('regBtn').disabled=true; //버튼 비활성화
+        }
+    }
+})
+//ul -> li 여러개 생성
+//li <div> 업로드 가능 //불가능 </div> 파일이름 
+//<span> 파일사이즈 </span>

@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.myproject.domain.boardVO;
+import com.ezen.myproject.domain.fileVO;
 import com.ezen.myproject.domain.pagingVO;
 import com.ezen.myproject.handler.PagingHandler;
 import com.ezen.myproject.service.BoardService;
@@ -35,10 +37,21 @@ public class BoardController
 		return "/board/register";
 	}
 	
+//	@PostMapping("/register")
+//	public String register(boardVO bvo)
+//	{
+//		log.info(">>>"+bvo.toString());
+//		int isOk=bsv.register(bvo);
+//		log.info("board register>>"+(isOk>0? "OK":"FAIL"));
+//		
+//		return "redirect:/board/list";
+//	}
+	//required(필수 여부)=false :해당 파라미터가 없어도 예외가 발생하지않음.
 	@PostMapping("/register")
-	public String register(boardVO bvo)
+	public String register(boardVO bvo,@RequestParam(name="files",required = false)MultipartFile[] files)
 	{
 		log.info(">>>"+bvo.toString());
+		log.info(">>files"+files);
 		int isOk=bsv.register(bvo);
 		log.info("board register>>"+(isOk>0? "OK":"FAIL"));
 		

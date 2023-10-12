@@ -114,10 +114,10 @@ async function editCommentToServer(cmtModData)  //cno만 받아와서 보내도�
     }
 }
 
-async function removeCommentToServer(cno)
+async function removeCommentToServer(cno,writer)
 {
     try {
-        const url='/comment/'+cno;
+        const url='/comment/'+cno+'/'+writer;
         const config={
             method:'delete'
         };
@@ -167,10 +167,14 @@ document.addEventListener('click',(e)=>{
         console.log('삭제버튼 클릭~!!');
         let li=e.target.closest('li');
         let cnoVal=li.dataset.cno;
+        let cmtWriter=li.dataset.writer;
         //삭제작업
-        removeCommentToServer(cnoVal).then(result=>{
+        removeCommentToServer(cnoVal,cmtWriter).then(result=>{
             if(result==1){
                 alert('댓글 삭제 성공~!!')
+            }
+            else if(result==2){
+                alert("id가 다릅니다.")
             }
             getCommentList(bnoVal);
         })

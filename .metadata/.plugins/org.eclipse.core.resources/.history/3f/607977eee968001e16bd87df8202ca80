@@ -1,0 +1,8 @@
+fileupload 준비작업
+1.라이브러리 추가 pom.xml
+commons-fileupload 1.4
+commons-io 2.11.0
+thumbnailator 0.4.14
+//파일에 대한 확장자 처리
+//이미지 파일 여부 확인
+tika-core 1.28 / tika-parsers 1.28
