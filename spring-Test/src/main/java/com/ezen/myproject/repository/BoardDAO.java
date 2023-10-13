@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.ezen.myproject.domain.boardDTO;
 import com.ezen.myproject.domain.boardVO;
 import com.ezen.myproject.domain.pagingVO;
 
@@ -23,5 +24,10 @@ public interface BoardDAO
 	int remove(int bno);
 
 	int totalcount(pagingVO pgvo);
+
+
+	int selectBno();
+
+	void updateCount();
 
 }

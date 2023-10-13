@@ -22,5 +22,7 @@ public class boardVO
 	private String isDel;
 	private String registerDate;
 	private int read_count;
+	private int cmt_count;
+	private int file_count;
 	
 }

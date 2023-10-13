@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.myproject.domain.boardDTO;
 import com.ezen.myproject.domain.boardVO;
 import com.ezen.myproject.domain.fileVO;
 import com.ezen.myproject.domain.pagingVO;
+import com.ezen.myproject.handler.FileHandler;
 import com.ezen.myproject.handler.PagingHandler;
 import com.ezen.myproject.service.BoardService;
 
@@ -29,6 +31,9 @@ public class BoardController
 {
 	@Inject
 	private BoardService bsv;
+	
+	@Inject
+	private FileHandler fhd;
 	
 	@GetMapping("/register")
 	public String boardRegisterGet() 
@@ -52,8 +57,20 @@ public class BoardController
 	{
 		log.info(">>>"+bvo.toString());
 		log.info(">>files"+files);
-		int isOk=bsv.register(bvo);
-		log.info("board register>>"+(isOk>0? "OK":"FAIL"));
+		
+		List<fileVO>flist=null;
+		//files가 null일수 있음. 첨부파일이 있을 경우에만 fhd 호출
+		if(files[0].getSize()>0) { //첫번째 파일의 size가 0보다 크다면
+			//flist에 파일 객체 담기
+			flist=fhd.uploadFiles(files);			
+		}else{
+			log.info("file null");
+		}
+		boardDTO bdto=new boardDTO(bvo,flist);
+		int isOk=bsv.register(bdto);
+		
+//		int isOk=bsv.register(bvo);
+//		log.info("board register>>"+(isOk>0? "OK":"FAIL"));
 		
 		return "redirect:/board/list";
 	}
@@ -69,6 +86,7 @@ public class BoardController
 		PagingHandler ph= new PagingHandler(pgvo, totalCount);
 		log.info("ph>"+ph);
 		model.addAttribute("list", list);
+		
 		model.addAttribute("ph",ph);
 		return "/board/list";
 	}

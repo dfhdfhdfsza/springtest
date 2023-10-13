@@ -1,0 +1,11 @@
+package com.ezen.myproject.handler;
+
+import org.springframework.stereotype.Component;
+
+//component:사용자가만듬
+@Component
+public class FileHandler 
+{
+	
+	
+}

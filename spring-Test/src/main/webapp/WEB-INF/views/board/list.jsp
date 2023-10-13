@@ -38,11 +38,13 @@
 	</form>
 	
 	<!-- 리스트 라인 -->
-	<table border="1">
+	<table border="1" style="text-align: center">
 		<thead>
 			<tr>
 				<th>#</th>
 				<th>제목</th>
+				<th>댓글갯수</th>
+				<th>파일갯수</th>
 				<th>작성자</th>
 				<th>작성일</th>
 				<th>조회수</th>
@@ -53,6 +55,8 @@
 				<tr>
 					<td>${bvo.bno }</td>
 					<td><a href="/board/detail?bno=${bvo.bno}">${bvo.title}</a></td>
+					<td>${bvo.cmt_count}</td>
+					<td>${bvo.file_count}</td>
 					<td>${bvo.writer}</td>
 					<td>${bvo.registerDate }</td>
 					<td>${bvo.read_count }</td>
