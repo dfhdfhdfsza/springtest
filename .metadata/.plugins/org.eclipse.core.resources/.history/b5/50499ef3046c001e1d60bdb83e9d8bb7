@@ -1,0 +1,128 @@
+package com.ezen.myproject.service;
+
+import static org.hamcrest.CoreMatchers.is;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.ezen.myproject.domain.boardDTO;
+import com.ezen.myproject.domain.boardVO;
+import com.ezen.myproject.domain.fileVO;
+import com.ezen.myproject.domain.pagingVO;
+import com.ezen.myproject.repository.BoardDAO;
+import com.ezen.myproject.repository.FileDAO;
+
+import lombok.extern.slf4j.Slf4j;
+
+
+
+@Service
+@Slf4j
+public class BoardServiceImpl implements BoardService 
+{
+	@Inject
+	private BoardDAO bdao;
+	
+	@Inject
+	private FileDAO fdao;
+
+	@Override
+	public int register(boardVO bvo) 
+	{
+		log.info("register check 2");
+		
+		return bdao.insert(bvo);
+	}
+
+	@Override
+	public List<boardVO> getList(pagingVO pgvo) {
+		log.info(">>pgvo>>"+pgvo);
+		log.info("List check 2");
+		return bdao.getList(pgvo);
+	}
+
+	@Override
+	public boardVO getDetail(int bno) {
+		//read_count +1
+		log.info("detail check 2");
+		bdao.readcount(bno,1);
+		return bdao.getDetail(bno);
+	}
+
+	@Override
+	public int modify(boardVO bvo) {
+		//수정할때 들어가는 부당 read_count 2개
+		//read_count -2
+		log.info("modify check 2");
+		bdao.readcount(bvo.getBno(),-2);
+		return bdao.modify(bvo);
+	}
+
+	@Override
+	public int remove(int bno) {
+		log.info("remove check 2");
+		return bdao.remove(bno);
+	}
+
+	@Override
+	public int getTotalCount(pagingVO pgvo) { 
+		log.info("total count check2");
+		return bdao.totalcount(pgvo);
+	}
+
+	@Override
+	public int register(boardDTO bdto) {
+		// TODO Auto-generated method stub
+		int isOk=bdao.insert(bdto.getBvo());
+		//---------파일 저장 라인
+		if(bdto.getFlist()==null) 
+		{
+			//파일의 값이 null이면 저장 없음.
+			isOk*=1; //그냥 성공한걸로...
+		}
+		else 
+		{
+			//bvo의 값이 들어가고, 파일이 있다면
+			if(isOk>0&&bdto.getFlist().size()>0) 
+			{
+				//fvo의 bno는 아직 설정되기 전
+				//현재 시점에서 bno는 아직 경정되지않음 =>db insert auto_increment로 인해 자동생성
+				int bno=bdao.selectBno(); //방금저장된 bno 가져오기
+				//flist의 모든 fileVO에 방금 가져온 bno를 set
+				for(fileVO fvo: bdto.getFlist()) 
+				{
+					fvo.setBno(bno);
+					log.info(">>> insert fvo >>"+fvo);
+					//파일저장
+					isOk *=fdao.insertFile(fvo);
+				}
+			}
+		}
+		return isOk;
+	}
+
+	@Override
+	public boardDTO getDetailFile(int bno) 
+	{
+		// detail bvo, file 같이 가져오기.
+	      bdao.readcount(bno, 1); //리드카운트 올리기
+	      boardDTO bdto = new boardDTO();
+	      bdto.setBvo(bdao.getDetail(bno)); // bdao bvo 호출
+	      bdto.setFlist(fdao.getFileList(bno));
+	      return bdto;
+	      
+	}
+
+	@Override
+	public int removeFile(String uuid) {
+		int isOk fdao.removeFile(uuid);
+		return 0;
+	}
+	
+	
+
+
+}

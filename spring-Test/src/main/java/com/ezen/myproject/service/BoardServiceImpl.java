@@ -104,5 +104,48 @@ public class BoardServiceImpl implements BoardService
 		return isOk;
 	}
 
+	@Override
+	public boardDTO getDetailFile(int bno) 
+	{
+		// detail bvo, file 같이 가져오기.
+	      bdao.readcount(bno, 1); //리드카운트 올리기
+	      boardDTO bdto = new boardDTO();
+	      bdto.setBvo(bdao.getDetail(bno)); // bdao bvo 호출
+	      bdto.setFlist(fdao.getFileList(bno));
+	      return bdto;
+	      
+	}
+
+	@Override
+	public int removeFile(String uuid) {
+		int isOk= fdao.removeFile(uuid);
+		return isOk;
+	}
+
+	@Override
+	public int modifyFile(boardDTO bdto) {
+		bdao.readcount(bdto.getBvo().getBno(),-2);
+		int isOk= bdao.modify(bdto.getBvo()); //기존 bvo update
+		if(bdto.getFlist()==null) 
+		{
+			isOk*=1;			
+		}
+		else
+		{
+			if(isOk>0 && bdto.getFlist().size()>0) 
+			{
+				int bno=bdto.getBvo().getBno();
+				for(fileVO fvo:bdto.getFlist()) 
+				{
+					fvo.setBno(bno);
+					isOk*=fdao.insertFile(fvo);
+				}
+			}
+		}
+		return isOk;
+	}
+	
+	
+
 
 }

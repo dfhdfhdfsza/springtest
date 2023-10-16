@@ -22,5 +22,11 @@ public interface BoardService {
 
 	int register(boardDTO bdto);
 
+	boardDTO getDetailFile(int bno);
+
+	int removeFile(String uuid);
+
+	int modifyFile(boardDTO bdto);
+
 
 }

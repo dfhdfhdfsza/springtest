@@ -25,7 +25,6 @@ public interface BoardDAO
 
 	int totalcount(pagingVO pgvo);
 
-
 	int selectBno();
 
 	void updateCount();

@@ -21,8 +21,6 @@
 		order by bno desc limit #{pageStart},#{qty}
 	</select>
 
-
-
 	<select id="getDetail" parameterType="int"
 		resultType="com.ezen.myproject.domain.boardVO">
 		select * from board where bno=#{bno}

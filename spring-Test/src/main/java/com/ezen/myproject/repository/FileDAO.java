@@ -1,9 +1,15 @@
 package com.ezen.myproject.repository;
 
+import java.util.List;
+
 import com.ezen.myproject.domain.fileVO;
 
 public interface FileDAO {
 
 	int insertFile(fileVO fvo);
+
+	List<fileVO> getFileList(int bno);
+
+	int removeFile(String uuid);
 
 }
